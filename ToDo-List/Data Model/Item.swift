@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Item {
+class Item : Encodable {
 	let title : String
 	var done = false
 	

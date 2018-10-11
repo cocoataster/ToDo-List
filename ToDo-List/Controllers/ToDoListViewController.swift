@@ -13,6 +13,8 @@ class ToDoListViewController: UITableViewController {
 	var itemArray = [Item]()
 	let defaults = UserDefaults.standard
 	
+	let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -25,8 +27,8 @@ class ToDoListViewController: UITableViewController {
 		let newItem3 = Item(title: "Find Mike!")
 		itemArray.append(newItem3)
 		
-		guard let items = defaults.array(forKey: "ToDoListArray") as? [Item] else { return }
-		itemArray = items
+//		guard let items = defaults.array(forKey: "ToDoListArray") as? [Item] else { return }
+//		itemArray = items
 	}
 	
 	//MARK: - TableView DataSource Methods
@@ -52,6 +54,7 @@ class ToDoListViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
 		itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+		saveItems()
 		
 		tableView.reloadData()
 		
@@ -71,10 +74,7 @@ class ToDoListViewController: UITableViewController {
 			//Save Text
 			guard (textField.text != "") else { return }
 			self.itemArray.append(Item(title: textField.text!))
-			
-			self.defaults.set(self.itemArray, forKey: "ToDoListArray")
-			
-			self.tableView.reloadData()
+			self.saveItems()
 		}
 		
 		alert.addTextField { (alertTextField) in
@@ -84,6 +84,19 @@ class ToDoListViewController: UITableViewController {
 		
 		alert.addAction(action)
 		present(alert, animated: true, completion: nil)
+	}
+	
+	func saveItems() {
+		let encoder = PropertyListEncoder()
+		
+		do {
+			let data = try encoder.encode(itemArray)
+			try data.write(to: dataFilePath!)
+		} catch {
+			print("error")
+		}
+		
+		self.tableView.reloadData()
 	}
 }
 
