@@ -7,18 +7,19 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoListViewController: UITableViewController {
 
 	var itemArray = [Item]()
-	let defaults = UserDefaults.standard
-	
-	let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		loadItems()
+		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+		
+		//loadItems()
 		
 	}
 	
@@ -64,7 +65,14 @@ class ToDoListViewController: UITableViewController {
 		let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
 			//Save Text
 			guard (textField.text != "") else { return }
-			self.itemArray.append(Item(title: textField.text!))
+			
+			//It would be nice to change the initializer to something like (title: String, done: Bool)
+			let newItem = Item(context: self.context)
+			newItem.title = textField.text
+			newItem.done = false
+			
+			self.itemArray.append(newItem)
+			
 			self.saveItems()
 		}
 		
@@ -80,26 +88,21 @@ class ToDoListViewController: UITableViewController {
 	//MARK: - Model Manipulation Methods
 	
 	func saveItems() {
-		let encoder = PropertyListEncoder()
-		
 		do {
-			let data = try encoder.encode(itemArray)
-			try data.write(to: dataFilePath!)
+			try context.save()
 		} catch {
-			print("Error encoding, \(error)")
+			print("Error while saving context \(error)")
 		}
 		
 		self.tableView.reloadData()
 	}
 	
 	func loadItems() {
-		if let data = try? Data(contentsOf: dataFilePath!) {
-			let decoder = PropertyListDecoder()
-			do {
-				itemArray = try decoder.decode([Item].self, from: data)
-			} catch {
-				print("Error decoding, \(error)")
-			}
+		let request : NSFetchRequest<Item> = Item.fetchRequest()
+		do {
+			itemArray = try context.fetch(request)
+		} catch {
+			print("Error while loading context \(error)")
 		}
 	}
 }
