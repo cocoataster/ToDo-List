@@ -18,17 +18,8 @@ class ToDoListViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let newItem = Item(title: "Find Mike!")
-		itemArray.append(newItem)
+		loadItems()
 		
-		let newItem2 = Item(title: "Find Mike!")
-		itemArray.append(newItem2)
-		
-		let newItem3 = Item(title: "Find Mike!")
-		itemArray.append(newItem3)
-		
-//		guard let items = defaults.array(forKey: "ToDoListArray") as? [Item] else { return }
-//		itemArray = items
 	}
 	
 	//MARK: - TableView DataSource Methods
@@ -86,6 +77,8 @@ class ToDoListViewController: UITableViewController {
 		present(alert, animated: true, completion: nil)
 	}
 	
+	//MARK: - Model Manipulation Methods
+	
 	func saveItems() {
 		let encoder = PropertyListEncoder()
 		
@@ -93,10 +86,21 @@ class ToDoListViewController: UITableViewController {
 			let data = try encoder.encode(itemArray)
 			try data.write(to: dataFilePath!)
 		} catch {
-			print("error")
+			print("Error encoding, \(error)")
 		}
 		
 		self.tableView.reloadData()
+	}
+	
+	func loadItems() {
+		if let data = try? Data(contentsOf: dataFilePath!) {
+			let decoder = PropertyListDecoder()
+			do {
+				itemArray = try decoder.decode([Item].self, from: data)
+			} catch {
+				print("Error decoding, \(error)")
+			}
+		}
 	}
 }
 
