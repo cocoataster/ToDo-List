@@ -19,7 +19,7 @@ class ToDoListViewController: UITableViewController {
 		
 		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 		
-		//loadItems()
+		loadItems()
 		
 	}
 	
@@ -99,13 +99,43 @@ class ToDoListViewController: UITableViewController {
 		self.tableView.reloadData()
 	}
 	
-	func loadItems() {
-		let request : NSFetchRequest<Item> = Item.fetchRequest()
+	
+	//Function has a default value of Item.fetchRequest() in case no value is provided (as happens in viewDidLoad)
+	//with -> External Parameter, request -> Internal Parameter
+	func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
 		do {
 			itemArray = try context.fetch(request)
 		} catch {
 			print("Error while loading context \(error)")
 		}
+		self.tableView.reloadData()
 	}
+}
+
+//MARK: - Search Bar Methods
+
+extension ToDoListViewController: UISearchBarDelegate {
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		let request : NSFetchRequest<Item> = Item.fetchRequest()
+		
+		guard let text = searchBar.text else { return }
+		request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", text)
+		
+		request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+		
+		loadItems(with: request)
+	}
+	
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		guard (searchBar.text!.isEmpty) else { return }
+		loadItems()
+		
+		//Background action
+		DispatchQueue.main.async {
+			searchBar.resignFirstResponder()
+		}
+	}
+	
 }
 
