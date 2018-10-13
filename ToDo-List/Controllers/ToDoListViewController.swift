@@ -16,11 +16,7 @@ class ToDoListViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-		
 		loadItems()
-		
 	}
 	
 	//MARK: - TableView DataSource Methods
@@ -30,15 +26,15 @@ class ToDoListViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "toDoItemCell", for: indexPath)
+		let itemCell = tableView.dequeueReusableCell(withIdentifier: "toDoItemCell", for: indexPath)
 		
 		let item = itemArray[indexPath.row]
 		
-		cell.textLabel?.text = item.title
+		itemCell.textLabel?.text = item.title
 		
-		cell.accessoryType = item.done ? .checkmark : .none
+		itemCell.accessoryType = item.done ? .checkmark : .none
 		
-		return cell
+		return itemCell
 	}
 	
 	//MARK: - TableView Delegate Methods
@@ -61,9 +57,7 @@ class ToDoListViewController: UITableViewController {
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
 		
 		var textField = UITextField()
-		
 		let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
-		
 		let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
 			//Save Text
 			guard (textField.text != "") else { return }

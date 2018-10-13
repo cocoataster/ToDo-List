@@ -33,7 +33,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="To-Do" id="XHg-cC-yaN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="k41-ty-Kbs">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addButtonPressed:" destination="hYf-kx-fnB" id="uGW-jg-15X"/>
                             </connections>
@@ -82,7 +81,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Items" id="0iH-PD-dWH">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nEq-kz-dTD">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addButtonPressed:" destination="t69-sN-oAL" id="xL7-NK-gex"/>
                             </connections>
@@ -116,4 +114,5 @@
             <point key="canvasLocation" x="368.80000000000001" y="120.98950524737631"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
