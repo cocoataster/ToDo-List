@@ -23,9 +23,9 @@
 		9F288098216F351D002E2C4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F28809A216F351E002E2C4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F28809D216F351E002E2C4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9F28809F216F351E002E2C4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F694B622171F64C003EFCF0 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		9F7D0C3621720B7C009BDE0B /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		9F7D0C3A21723B47009BDE0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 				9FE5E487216F9B4200493D82 /* Data Model */,
 				9FE5E488216F9B4B00493D82 /* Views */,
 				9FE5E48A216F9BEC00493D82 /* Supporting Files */,
-				9F28809F216F351E002E2C4E /* Info.plist */,
+				9F7D0C3A21723B47009BDE0B /* Info.plist */,
 			);
 			path = "ToDo-List";
 			sourceTree = "<group>";
@@ -79,6 +79,7 @@
 		9FE5E488216F9B4B00493D82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9F28809C216F351E002E2C4E /* LaunchScreen.storyboard */,
 				9F288097216F351D002E2C4E /* Main.storyboard */,
 			);
 			path = Views;
@@ -96,7 +97,6 @@
 		9FE5E48A216F9BEC00493D82 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9F28809C216F351E002E2C4E /* LaunchScreen.storyboard */,
 				9F28809A216F351E002E2C4E /* Assets.xcassets */,
 			);
 			path = "Supporting Files";
