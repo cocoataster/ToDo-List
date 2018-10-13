@@ -45,10 +45,12 @@ class ToDoListViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
+		//Delete items insead of marking them
+//		context.delete(itemArray[indexPath.row])
+//		itemArray.remove(at: indexPath.row)
+		
 		itemArray[indexPath.row].done = !itemArray[indexPath.row].done
 		saveItems()
-		
-		tableView.reloadData()
 		
 		//Avoid gray area selected
 		tableView.deselectRow(at: indexPath, animated: false)
