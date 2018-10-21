@@ -64,6 +64,20 @@ class ToDoListViewController: UITableViewController {
 		tableView.deselectRow(at: indexPath, animated: false)
 	}
 	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		guard editingStyle == .delete else { return }
+		if let item = todoItems?[indexPath.row] {
+			do {
+				try realm.write {
+					realm.delete(item)
+				}
+			} catch {
+				print("Error while deleting \(error)")
+			}
+		}
+		self.tableView.reloadData()
+	}
+	
 	//MARK: - Add New Items
 	
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
