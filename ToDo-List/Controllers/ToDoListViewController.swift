@@ -49,9 +49,16 @@ class ToDoListViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
-		if todoItems?[indexPath.row] != nil {
-			todoItems![indexPath.row].done = !todoItems![indexPath.row].done
+		if let item = todoItems?[indexPath.row] {
+			do {
+				try realm.write {
+					item.done = !item.done
+				}
+			} catch {
+				print("Error saving done status\(error)")
+			}
 		}
+		self.tableView.reloadData()
 		
 		//Avoid gray area selected
 		tableView.deselectRow(at: indexPath, animated: false)
