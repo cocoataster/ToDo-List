@@ -24,9 +24,33 @@ class ToDoListViewController: SwipeTableViewController {
 		}
 	}
 	
+	@IBOutlet weak var searchBar: UISearchBar!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.tableView.rowHeight = 80.0
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		title = selectedCategory?.name
+		guard let colorHex = selectedCategory?.color else { fatalError() }
+		updateNavBar(withHexColor: colorHex)
+	}
+	
+	override func willMove(toParent parent: UIViewController?) {
+		updateNavBar(withHexColor: "FF5855")
+	}
+	
+	//MARK: - Navigation Bar View
+	
+	func updateNavBar(withHexColor colorHexCode: String) {
+		guard let navBar = navigationController?.navigationBar else { fatalError() }
+		guard let navBarColor = UIColor(hexString: colorHexCode) else { fatalError() }
+		
+		navBar.barTintColor = navBarColor
+		navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+		navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
+		searchBar.backgroundColor = navBarColor
 	}
 	
 	//MARK: - TableView DataSource Methods
