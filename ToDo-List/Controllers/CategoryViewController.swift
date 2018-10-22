@@ -35,7 +35,7 @@ class CategoryViewController: SwipeTableViewController {
 		let categoryCell = super.tableView(tableView, cellForRowAt: indexPath)
 		
 		categoryCell.textLabel?.text = categories?[indexPath.row].name ?? "No categories set yet"
-		categoryCell.backgroundColor = UIColor(hexString: (categories?[indexPath.row].color)!) ?? UIColor.white
+		categoryCell.backgroundColor = UIColor(hexString: (categories?[indexPath.row].color)!)
 		
 		return categoryCell
 	}

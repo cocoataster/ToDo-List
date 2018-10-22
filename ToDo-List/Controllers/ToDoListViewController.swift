@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
+import ChameleonFramework
 
 class ToDoListViewController: SwipeTableViewController {
 
@@ -39,6 +41,10 @@ class ToDoListViewController: SwipeTableViewController {
 		if let item = todoItems?[indexPath.row] {
 			itemCell.textLabel?.text = item.title
 			itemCell.accessoryType = item.done ? .checkmark : .none
+			let percentage = CGFloat(indexPath.row) / CGFloat(todoItems!.count)
+			let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: percentage)
+			itemCell.backgroundColor = color
+			itemCell.textLabel?.textColor = ContrastColorOf(color!, returnFlat: true)
 		} else {
 			itemCell.textLabel?.text = "Want to add an item? Just click the + button!"
 			itemCell.accessoryType = .none
