@@ -9,10 +9,11 @@
 import UIKit
 import RealmSwift
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: SwipeTableViewController {
 
-	var todoItems: Results<Item>?
 	var realm = try! Realm()
+	
+	var todoItems: Results<Item>?
 	
 	var selectedCategory : Category? {
 		//Will call loadItems as soon as selectedCategory is set
@@ -32,7 +33,7 @@ class ToDoListViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let itemCell = tableView.dequeueReusableCell(withIdentifier: "toDoItemCell", for: indexPath)
+		let itemCell = super.tableView(tableView, cellForRowAt: indexPath)
 		
 		if let item = todoItems?[indexPath.row] {
 			itemCell.textLabel?.text = item.title
@@ -58,24 +59,10 @@ class ToDoListViewController: UITableViewController {
 				print("Error saving done status\(error)")
 			}
 		}
-		self.tableView.reloadData()
+		tableView.reloadData()
 		
 		//Avoid gray area selected
 		tableView.deselectRow(at: indexPath, animated: false)
-	}
-	
-	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-		guard editingStyle == .delete else { return }
-		if let item = todoItems?[indexPath.row] {
-			do {
-				try realm.write {
-					realm.delete(item)
-				}
-			} catch {
-				print("Error while deleting \(error)")
-			}
-		}
-		self.tableView.deleteRows(at: [indexPath], with: .bottom)
 	}
 	
 	//MARK: - Add New Items
@@ -85,10 +72,11 @@ class ToDoListViewController: UITableViewController {
 		var textField = UITextField()
 		let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
 		let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-			//Save Text
+			
+			// If text is not blank
 			guard (textField.text != "") else { return }
 			
-			//Review
+			// Verify category did set and add item to array
 			if let currentCategory = self.selectedCategory {
 				do {
 					try self.realm.write {
@@ -113,9 +101,23 @@ class ToDoListViewController: UITableViewController {
 		present(alert, animated: true, completion: nil)
 	}
 	
+	//MARK: - Data Manipulation Methods
+	
 	func loadItems() {
 		todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
 		tableView.reloadData()
+	}
+	
+	override func deleteRow(at indexPath: IndexPath) {
+		if let itemForDeletion = todoItems?[indexPath.row] {
+			do {
+				try realm.write {
+					realm.delete(itemForDeletion)
+				}
+			} catch {
+				print("Error deleting item \(error)")
+			}
+		}
 	}
 }
 
