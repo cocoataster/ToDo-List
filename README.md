@@ -2,7 +2,7 @@
 
 ![Swift Version](https://img.shields.io/badge/swift-4.2-orange.svg)
 
-An App to create lists and add items inside. Each line will be separated by a beautiful color, going from lighter to darker as you add new items.
+App to create lists and add items inside. Each line will be separated by a beautiful color, going from lighter to darker as you add new items.
 
 ## Snapshots
 
@@ -10,7 +10,7 @@ An App to create lists and add items inside. Each line will be separated by a be
 ![Snapshot](https://github.com/cocoataster/Images/blob/master/todoSnap2.png)
 ![Snapshot](https://github.com/cocoataster/Images/blob/master/todoSnap3.png)
 
-## Some features you may like
+## Features
 
 - [x] Check items off the list
 - [x] Delete items
