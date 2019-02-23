@@ -8,6 +8,7 @@ An App to create lists and add items inside. Each line will be separated by a be
 
 ![Snapshot](https://github.com/cocoataster/Images/blob/master/todoSnap1.png)
 ![Snapshot2](https://github.com/cocoataster/Images/blob/master/todoSnap2.png)
+![Snapshot2](https://github.com/cocoataster/Images/blob/master/todoSnap3.png)
 
 ## Some features you may like
 
